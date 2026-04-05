@@ -7,8 +7,13 @@
   <style>
     :root {
       --bg: #000000;
+      --bg-gradient-start: rgba(185, 142, 255, 0.16);
+      --bg-gradient-end: rgba(255, 196, 2, 0.1);
+      --bg-solid-start: #000000;
+      --bg-solid-end: #050505;
       --panel: rgba(10, 10, 10, 0.92);
       --panel-strong: rgba(0, 0, 0, 0.98);
+      --hero-bg: #0a0a0a;
       --text: #ffffff;
       --muted: #888888;
       --accent: #ffc402;
@@ -17,6 +22,41 @@
       --danger: #ffc402;
       --ok: #ffc402;
       --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+      --surface-soft: rgba(255, 255, 255, 0.02);
+      --surface-mid: rgba(255, 255, 255, 0.03);
+      --surface-strong: rgba(0, 0, 0, 0.35);
+      --surface-code: rgba(255, 255, 255, 0.08);
+      --table-head-bg: #111111;
+      --theme-toggle-bg: rgba(255, 255, 255, 0.04);
+      --theme-toggle-border: rgba(255, 255, 255, 0.14);
+      --theme-toggle-hover: rgba(255, 196, 2, 0.12);
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f6f1e7;
+      --bg-gradient-start: rgba(255, 196, 2, 0.14);
+      --bg-gradient-end: rgba(117, 84, 43, 0.08);
+      --bg-solid-start: #f6f1e7;
+      --bg-solid-end: #efe7d8;
+      --panel: rgba(255, 252, 247, 0.92);
+      --panel-strong: rgba(255, 250, 243, 0.98);
+      --hero-bg: rgba(255, 252, 247, 0.97);
+      --text: #1b1711;
+      --muted: #6d6256;
+      --accent: #9c5f00;
+      --accent-strong: #7d4ccf;
+      --line: rgba(69, 48, 20, 0.14);
+      --danger: #9c5f00;
+      --ok: #9c5f00;
+      --shadow: 0 24px 70px rgba(71, 47, 22, 0.12);
+      --surface-soft: rgba(122, 89, 50, 0.05);
+      --surface-mid: rgba(122, 89, 50, 0.07);
+      --surface-strong: rgba(122, 89, 50, 0.08);
+      --surface-code: rgba(122, 89, 50, 0.1);
+      --table-head-bg: #f2e8d6;
+      --theme-toggle-bg: rgba(255, 255, 255, 0.7);
+      --theme-toggle-border: rgba(69, 48, 20, 0.14);
+      --theme-toggle-hover: rgba(156, 95, 0, 0.1);
     }
 
     * {
@@ -29,10 +69,11 @@
       font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(185, 142, 255, 0.16), transparent 30%),
-        radial-gradient(circle at top right, rgba(255, 196, 2, 0.1), transparent 24%),
-        linear-gradient(180deg, #000000, #050505 100%);
+        radial-gradient(circle at top left, var(--bg-gradient-start), transparent 30%),
+        radial-gradient(circle at top right, var(--bg-gradient-end), transparent 24%),
+        linear-gradient(180deg, var(--bg-solid-start), var(--bg-solid-end) 100%);
       overflow-x: hidden;
+      transition: background 220ms ease, color 220ms ease;
     }
 
     body::before {
@@ -55,9 +96,10 @@
       padding: 34px;
       border: 1px solid var(--line);
       border-radius: 28px;
-      background: #0a0a0a;
+      background: var(--hero-bg);
       box-shadow: var(--shadow);
       overflow: hidden;
+      transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
     }
 
     .hero::after {
@@ -95,6 +137,14 @@
     .hero-topline {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      display: inline-flex;
+      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
@@ -106,6 +156,25 @@
       font-size: 13px;
       line-height: 1.2;
       letter-spacing: 0.01em;
+    }
+
+    .theme-toggle {
+      appearance: none;
+      border: 1px solid var(--theme-toggle-border);
+      background: var(--theme-toggle-bg);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--theme-toggle-hover);
+      border-color: rgba(255, 196, 2, 0.32);
+      transform: translateY(-1px);
     }
 
     .hero-status-sep {
@@ -358,7 +427,7 @@
       padding: 16px;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--surface-soft);
     }
 
     .polymarket-markets h3 {
@@ -417,7 +486,7 @@
       padding: 12px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.35);
+      background: var(--surface-strong);
     }
 
     .macro-asset-name {
@@ -527,7 +596,7 @@
       padding: 12px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--surface-soft);
       line-height: 1.6;
       color: var(--text);
     }
@@ -551,7 +620,7 @@
     .polymarket-group {
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      background: rgba(0, 0, 0, 0.35);
+      background: var(--surface-strong);
       overflow: hidden;
     }
 
@@ -589,11 +658,11 @@
       top: 0;
       z-index: 1;
       color: var(--muted);
-      background: #111111;
+      background: var(--table-head-bg);
     }
 
     .polymarket-table tr:nth-child(even) td {
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--surface-soft);
     }
 
     .polymarket-title-cell {
@@ -621,7 +690,7 @@
       padding: 16px 18px;
       border-radius: 18px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--surface-mid);
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
     }
 
@@ -704,7 +773,7 @@
       padding: 18px;
       border-radius: 18px;
       border: 1px dashed rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--surface-mid);
       color: var(--muted);
       line-height: 1.8;
     }
@@ -719,7 +788,7 @@
     code {
       padding: 2px 6px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--surface-code);
       color: var(--accent);
       font-family: Consolas, Monaco, monospace;
     }
@@ -727,6 +796,7 @@
     @media (max-width: 900px) {
       .hero-topline {
         align-items: flex-start;
+        justify-content: flex-start;
       }
 
       .stat-wrap {
@@ -756,11 +826,14 @@
   <main class="page">
     <section class="hero">
       <div class="hero-topline">
-        <div class="eyebrow">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span class="eyebrow-main">冲突监测页面</span>
+        <div class="hero-meta">
+          <div class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="eyebrow-main">冲突监测页面</span>
+          </div>
+          <div class="hero-status-line">冲突持续<span id="hero-day-count" class="eyebrow-day">0</span>天<span class="hero-status-sep">|</span><span id="hero-risk-text">今日是周日，未触发周四周五风险提示。</span></div>
         </div>
-        <div class="hero-status-line">冲突持续<span id="hero-day-count" class="eyebrow-day">0</span>天<span class="hero-status-sep">|</span><span id="hero-risk-text">今日是周日，未触发周四周五风险提示。</span></div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色和浅色主题">切换浅色</button>
       </div>
       <h1>美伊冲突主题跟踪页</h1>
       <p>
@@ -964,6 +1037,40 @@
 
   <script>
     const startDate = new Date("2026-02-28T00:00:00+08:00");
+    const themeStorageKey = "iran-monitor-theme";
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+      const resolvedTheme = theme === "light" ? "light" : "dark";
+      document.documentElement.dataset.theme = resolvedTheme;
+      const themeToggle = document.getElementById("theme-toggle");
+      if (themeToggle) {
+        themeToggle.textContent = resolvedTheme === "dark" ? "切换浅色" : "切换深色";
+        themeToggle.setAttribute("aria-pressed", resolvedTheme === "dark" ? "true" : "false");
+      }
+    }
+
+    function initTheme() {
+      const savedTheme = window.localStorage.getItem(themeStorageKey);
+      applyTheme(savedTheme || getSystemTheme());
+    }
+
+    function bindThemeToggle() {
+      const themeToggle = document.getElementById("theme-toggle");
+      if (!themeToggle) {
+        return;
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const currentTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        window.localStorage.setItem(themeStorageKey, nextTheme);
+      });
+    }
 
     function getDayDiff() {
       const now = new Date();
@@ -1494,6 +1601,8 @@ const embeddedMacroAssets = {
         "当前页面直接展示内嵌快照。运行 python scripts/scrape_bca_dashboard.py、python scripts/scrape_polymarket_markets.py 或 python scripts/scrape_macro_assets.py 后，脚本会自动把最新结果同步写入本页。";
     }
 
+    initTheme();
+    bindThemeToggle();
     updateDuration();
     loadFeed();
     syncHeroOffset();
